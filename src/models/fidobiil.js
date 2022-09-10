@@ -1,1 +1,0 @@
-/* aqui esta o fii do bill */
