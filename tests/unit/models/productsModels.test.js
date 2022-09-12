@@ -35,7 +35,7 @@ const { products } = require('./mocks/products.model.mock');
 describe('testes da camada model em productsModel', () => { 
   
   it('testando o rertono da função de getProducts', async function () {
-    await sinon.stub(connection, "execute").resolves([products]);
+    sinon.stub(connection, "execute").resolves([products]);
     const result = await productsModel.getProducts();
 
     expect(result).to.be.deep.equal([
@@ -46,7 +46,7 @@ describe('testes da camada model em productsModel', () => {
   });
 
   it('testando o rertono da função de getProductId', async function () {
-    await sinon.stub(connection, "execute").resolves([[{ id: 3, name: "Escudo do Capitão América" }]]);
+    sinon.stub(connection, "execute").resolves([[{ id: 3, name: "Escudo do Capitão América" }]]);
     const result = await productsModel.getProductId(3);
     expect(result).to.be.deep.equal({ id: 3, name: "Escudo do Capitão América" });
   });
