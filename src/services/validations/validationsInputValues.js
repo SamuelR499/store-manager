@@ -1,14 +1,6 @@
 // const { addRequestTravelSchema } = require('./schemas');
-const productsModel = require('../../models/products.model');
-const { addProductSchema } = require('./schemas');
+const { addProductSchema, addSaleSchema } = require('./schemas');
 
-const validateInputValues = async (productId) => {
-  /* Valida se productId existe */
-  const product = await productsModel.getProductId(productId);
-  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
-
-  return { type: null, message: '' };
-};
 /* valida name */
   
 const validateNewProduct = (name) => { 
@@ -23,7 +15,20 @@ const validateNewProduct = (name) => {
   return { type: null };
 };
 
+/* valida produtos a ser adicionado em sales */
+const validateNewSale = (info) => { 
+  const { error } = addSaleSchema.validate(info);
+
+  if (error) { 
+    return {
+      type: error.details[0].type === 'number.greater' ? 'INVALID_FIELD' : 'FIELD_REQUIRED',
+      message: error.details[0].message.replace(/\[\d\]./, ''),
+    }; 
+  }
+
+  return { type: null, message: '' };
+};
 module.exports = {
-  validateInputValues,
   validateNewProduct,
+  validateNewSale,
 };

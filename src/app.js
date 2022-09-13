@@ -1,5 +1,6 @@
 const express = require('express');
-const productsRoutes = require('./routers/products.router');
+const productsRouter = require('./routers/products.router');
+const salesRouter = require('./routers/sales.router');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.get('/', (_request, response) => {
 // você pode registrar suas rotas normalmente, como o exemplo acima
 // você deve usar o arquivo server.js para executar sua aplicação
 app.use(express.json());
-app.use('/products', productsRoutes);
+app.use('/products', productsRouter);
+app.use('/sales', salesRouter);
 
 module.exports = app;
