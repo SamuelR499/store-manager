@@ -4,6 +4,11 @@ const products = [
   { id: 3, name: "Escudo do Capitão América" },
 ];
 
+productIsert = {
+  name: 'Quinjet'
+};
+
 module.exports = {
   products,
+productIsert
 };

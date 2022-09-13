@@ -3,13 +3,15 @@ const { validateInputValues, validateNewProduct } = require('./validations/valid
 
 const getProducts = async () => {
   const products = await productsModel.getProducts();
-  return products;
+  // console.log(products);
+  return { type: null, message: products };
 };
 
 const getProductId = async (ProductId) => {
   const error = await validateInputValues(ProductId);
   if (error.type) { return error; } 
   const product = await productsModel.getProductId(ProductId);
+  console.log({ type: null, message: product });
 
   return { type: null, message: product };
 };

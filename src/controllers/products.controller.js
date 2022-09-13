@@ -2,8 +2,8 @@ const productsService = require('../services/products.service');
 const { mapError } = require('../utils/errorMap');
 
 const getProducts = async (_req, res) => {
-  const result = await productsService.getProducts();
-  res.status(200).json(result);
+  const { message } = await productsService.getProducts();
+  res.status(200).json(message);
 };
 
 const getProductId = async (req, res) => {
