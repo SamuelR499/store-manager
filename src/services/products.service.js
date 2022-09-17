@@ -42,10 +42,17 @@ const deleteProduct = async (productId) => {
   return { type: null };
 };
 
+const getByQuery = async (query) => { 
+  const result = await productsModel.getByQuery(query);
+
+  return { type: null, message: result };
+};
+
 module.exports = {
   getProducts,
   getProductId,
   creatProduct,
   updateProduct,
   deleteProduct,
+  getByQuery,
 };
