@@ -1,4 +1,3 @@
-// const { addRequestTravelSchema } = require('./schemas');
 const { addProductSchema, addSaleSchema } = require('./schemas');
 
 /* valida name */
@@ -26,8 +25,11 @@ const validateNewSale = (info) => {
     }; 
   }
 
-  return { type: null, message: '' };
+  return { type: null };
 };
+
+/* Valida se o produto existe */
+
 module.exports = {
   validateNewProduct,
   validateNewSale,

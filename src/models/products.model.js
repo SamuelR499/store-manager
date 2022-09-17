@@ -28,8 +28,6 @@ const updateProduct = async (productName, productId) => {
     'UPDATE StoreManager.products SET name = ? WHERE id = ?',
     [productName, productId],
   );
-  const result = await getProductId(productId);
-  return result;
 };
 
 const deleteProduct = async (productId) => { 

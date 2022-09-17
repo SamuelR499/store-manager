@@ -1,7 +1,15 @@
 const salesModel = require('../models/sales.models');
 const productsService = require('./products.service');
-
 const { validateNewSale } = require('./validations/validationsInputValues');
+
+const isProductsVerify = async (salesList) => {
+  const productsList = await Promise
+    .all(salesList.map(({ productId }) => productsService.getProductId(productId)));
+  
+  const isProducts = productsList.every((elem) => elem.type === null);
+
+  return isProducts;
+};
 
 const isExistingProduct = async (salesList) => {
   const productsList = await Promise
@@ -53,9 +61,27 @@ const deleteSale = async (saleId) => {
   return { type: null };
 };
 
+const updateSale = async (saleId, salesList) => { 
+  const productError = validateNewSale(salesList);
+  if (productError.type) { return productError; }
+
+  const isProducts = await isProductsVerify(salesList);
+  if (!isProducts) {
+    return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  }
+
+  const saleError = await getSaleById(saleId);
+  if (saleError.type) { return saleError; }
+
+  await Promise.all(salesList.map((elem) => salesModel.updateSale({ saleId, ...elem })));
+
+  return { type: null, message: { saleId, itemsUpdated: salesList } };
+};
+
 module.exports = {
   addSales,
   getSales,
   getSaleById,
   deleteSale,
+  updateSale,
 };
